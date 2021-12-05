@@ -2,35 +2,31 @@ version: "3.9"
 services:
   redis:
     image: "redis:alpine"
-#    ports:
-#      - "6379:6379"
-    network_mode: host
+    ports:
+      - "6379:6379"
+  # ainda precisa adicionar scripts para criar o banco
   postgres:
     image: postgres
     environment:
       POSTGRES_PASSWORD: mysecretpassword
-#    ports:
-#      - "5432:5432"
-    network_mode: host
+    ports:
+      - "5432:5432"
   dashboard:
     image: gabriellpa/dashboard-jobs:latest
-#    ports:
-#      - "8000:8080"
+    ports:
+      - "8085:8085"
     depends_on:
       - redis
-    network_mode: host
   orchestrator:
     image: gabriellpa/orchestrator-jobs:latest
-#    ports:
-#      - "8080"
+    ports:
+      - "8080"
     depends_on:
       - redis
-    network_mode: host
-  case-api:
+  casesapi:
     image: gabriellpa/cases-api:latest
-#    ports:
-#      - "8080:8080"
-#      - "9090:9090"
+    ports:
+      - "8080:8080"
+      - "9090:9090"
     depends_on:
       - postgres
-    network_mode: host
